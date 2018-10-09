@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+.clr-control-label {
+  //line-height: inherit;
+}
+
+html, body, .content-container {
+  height: 100%;
+}
+input[type=number] {
+  width: 40px;
+}
+
+.main-container {
+  height: calc(100% - 60px);
+}
