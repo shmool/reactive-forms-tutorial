@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-home',
   template: `
     <a href="http://ng-girls.org" target="_blank">
-      <img class="logo" src="http://res.cloudinary.com/nggirls/image/upload/v1539164298/logo_big.png">
+      <img class="logo" src="https://res.cloudinary.com/nggirls/image/upload/v1539164298/logo_big.png">
     </a>
     <h1>Reactive Forms Tutorial</h1>
     <h2>by Shmuela Jacobs</h2>
