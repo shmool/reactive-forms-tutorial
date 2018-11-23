@@ -12,7 +12,7 @@ const INIT_SEATS = 20;
   template: `
     <h1>New Room</h1>
 
-    <form [formGroup]="roomConfig" clrForm clrLayout="horizontal" (ngSubmit)="save()">
+    <form [formGroup]="roomConfig" clrForm clrLayout="horizontal" (ngSubmit)="save()" autocomplete="off">
 
       <clr-input-container>
         <label>Room name: </label>
