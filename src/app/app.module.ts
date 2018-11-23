@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ClarityModule, ClrFormsNextModule } from '@clr/angular';
+import { ClarityModule } from '@clr/angular';
 import { HeaderComponent } from './header/header.component';
 import { NewRoomComponent } from './new-room/new-room.component';
 import { SeatTypesFormComponent } from './seat-types-form/seat-types-form.component';
@@ -28,8 +28,7 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ClarityModule,
-    ClrFormsNextModule
+    ClarityModule
   ],
   providers: [],
   bootstrap: [AppComponent]

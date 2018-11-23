@@ -11,7 +11,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 
     <form *ngIf="roomConfigForm"
           [formGroup]="roomConfigForm"
-          class="room-config-form"
+          class="room-config-form clr-form clr-form-horizontal"
           (ngSubmit)="save()">
 
       <button type="submit" class="btn btn-success">
@@ -22,23 +22,23 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
       <div formArrayName="rows" class="room-config">
         <div *ngFor="let row of roomConfigForm.get('rows').controls; let i = index"
              [formGroupName]="i"
-             class="seating-rows-config row">
-          <div class="col-sm-1">
+             class="seating-rows-config clr-row">
+          <div class="clr-col-sm-1">
             <input type="number" formControlName="seatCount">
           </div>
 
-          <div class="col-sm-1 row-number">
+          <div class="clr-col-sm-1 row-number">
             <span>{{ i + 1 }}</span>
           </div>
 
-          <div formArrayName="seats" class="col-sm-8 row-seats">
+          <div formArrayName="seats" class="clr-col-sm-8 row-seats">
             <app-seat-control *ngFor="let seat of row.get(['seats']).controls; let j=index"
                               [seatId]="j"
                               [seatTypes]="seatTypes"
                               [formControlName]="j"></app-seat-control>
           </div>
 
-          <div class="col-sm-2">
+          <div class="clr-col-sm-2">
             <button type="button"
                     class="btn btn-icon btn-sm btn-primary btn-row-action"
                     (click)="duplicateRow(row, i)">
