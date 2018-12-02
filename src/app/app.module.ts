@@ -12,6 +12,12 @@ import { SeatTypesFormComponent } from './seat-types-form/seat-types-form.compon
 import { RoomConfigComponent } from './room-config/room-config.component';
 import { SeatControlComponent } from './seat-control/seat-control.component';
 import { HomeComponent } from './home/home.component';
+import { SeatRowComponent } from './seat-row/seat-row.component';
+import { TestComponent } from './test/test.component';
+import { SelectSeatsComponent } from './select-seats/select-seats.component';
+import { SeatComponent } from './seat/seat.component';
+import { SelectSeatControlComponent } from './select-seat-control/select-seat-control.component';
+import { SeatTakenAlertComponent } from './seat-taken-alert/seat-taken-alert.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +27,13 @@ import { HomeComponent } from './home/home.component';
     SeatTypesFormComponent,
     RoomConfigComponent,
     SeatControlComponent,
-    HomeComponent
+    HomeComponent,
+    SeatRowComponent,
+    TestComponent,
+    SelectSeatsComponent,
+    SeatComponent,
+    SelectSeatControlComponent,
+    SeatTakenAlertComponent
   ],
   imports: [
     BrowserModule,

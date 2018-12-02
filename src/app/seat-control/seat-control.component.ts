@@ -1,6 +1,7 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, forwardRef, Input, OnChanges, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SeatType } from '../db.service';
+import { SeatTypesService } from '../seat-types.service';
 
 @Component({
   selector: 'app-seat-control',
@@ -21,7 +22,7 @@ import { SeatType } from '../db.service';
       </button>
 
       <clr-dropdown-menu class="dropdown-menu">
-        <button *ngFor="let type of _seatTypes"
+        <button *ngFor="let type of _seatTypesArray"
                 clrDropdownItem
                 type="button"
                 class="dropdown-item"
@@ -33,14 +34,26 @@ import { SeatType } from '../db.service';
 
     </clr-dropdown>
   `,
-  styleUrls: ['./seat-control.component.scss']
+  styleUrls: ['./seat-control.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SeatControlComponent implements ControlValueAccessor {
-  @Input() seatId;
-
+export class SeatControlComponent implements ControlValueAccessor, OnChanges, DoCheck {
   @Input()
+  set seatId(id) {
+    // console.log('setting seatId');
+    this._seatId = id;
+  }
+
+  get seatId() {
+    // console.log('getting seatId');
+    return this._seatId;
+  }
+
+  _seatId;
+
   set seatTypes(types) {
     this._seatTypes = types;
+    this._seatTypesArray = Object.values(types);
     if (this._value && this._seatTypes) {
       this.findSeatType();
     }
@@ -48,7 +61,7 @@ export class SeatControlComponent implements ControlValueAccessor {
 
   @Input()
   set value(seatTypeId) {
-    this._value = seatTypeId;
+    this._value = seatTypeId || this._seatTypesArray[0].id;
     if (this._seatTypes) {
       this.findSeatType();
     }
@@ -58,15 +71,22 @@ export class SeatControlComponent implements ControlValueAccessor {
 
   selectedType: SeatType = {};
   _seatTypes;
+  _seatTypesArray;
   _value;
 
-  private findSeatType() {
-    this.selectedType = this._seatTypes.find(type => type.id === this._value);
+  constructor(private seatTypesService: SeatTypesService, private renderer: Renderer2, private cd: ChangeDetectorRef) {
+    this.seatTypes = seatTypesService.seatTypes;
   }
 
-  onChange = _ => {};
+  private findSeatType() {
+    this.selectedType = this._seatTypes[this._value];
+  }
 
-  onTouched = () => {};
+  onChange = _ => {
+  };
+
+  onTouched = () => {
+  };
 
   writeValue(value: any): void {
     this.value = value;
@@ -82,12 +102,21 @@ export class SeatControlComponent implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
+    this.cd.detectChanges();
   }
 
   setType(type) {
     this.value = type.id;
     this.onChange(type.id);
     this.onTouched();
+  }
+
+  ngOnChanges() {
+    // console.log('changes');
+  }
+
+  ngDoCheck() {
+    // console.log('check')
   }
 
 }

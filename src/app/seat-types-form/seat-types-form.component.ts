@@ -10,7 +10,7 @@ const TYPE_COLORS = ['#666666', '#aa2222', '#00aaff', '#cccc00'];
   template: `
     <h2>Seat types</h2>
 
-    <form [formGroup]="seatTypesForm" clrForm clrLayout="horizontal" (ngSubmit)="update()">
+    <form [formGroup]="seatTypesForm" clrForm (ngSubmit)="update()">
 
       <button type="button" class="btn btn-icon btn-sm" (click)="addType()">
         <clr-icon shape="plus"></clr-icon>

@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DbService } from '../db.service';
 import { Router } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
 
 const INIT_ROWS = 10;
 const INIT_SEATS = 20;
+
+interface FormValue {
+  firstName: string;
+};
 
 
 @Component({
@@ -12,7 +17,7 @@ const INIT_SEATS = 20;
   template: `
     <h1>New Room</h1>
 
-    <form [formGroup]="roomConfig" clrForm clrLayout="horizontal" (ngSubmit)="save()" autocomplete="off">
+    <form [formGroup]="roomConfig" clrForm (ngSubmit)="save()" autocomplete="off">
 
       <clr-input-container>
         <label>Room name: </label>
@@ -39,11 +44,22 @@ const INIT_SEATS = 20;
       </button>
 
     </form>
+
+    <form [formGroup]="form" clrForm autocomplete="off">
+      <label>First name</label><input formControlName="firstName">
+
+      <div formArrayName="arr">
+        <div *ngFor="let item of form.get('arr').controls; let i = index">
+          <input [formControlName]="i">
+        </div>
+      </div>
+    </form>
   `,
   styleUrls: ['./new-room.component.scss']
 })
 export class NewRoomComponent implements OnInit {
   roomConfig;
+  form;
 
   constructor(private db: DbService, private router: Router) {
 
@@ -54,9 +70,41 @@ export class NewRoomComponent implements OnInit {
       avgSeatsInRow: new FormControl(INIT_SEATS, [Validators.required, Validators.min(1)])
     });
 
+    this.form = new FormGroup({
+        firstName: new FormControl('', Validators.required),
+      arr: new FormArray([
+        new FormControl(),
+        new FormControl(),
+        new FormControl()
+      ])
+      }
+    );
+
+    this.form.patchValue({arr: [1,2,3,4]});
+
+    console.log(this.form)
+
   }
 
   ngOnInit() {
+
+    this.form.valueChanges.pipe(
+      map((value: FormValue) => {
+        if (value.firstName === '?') {
+          value.firstName = '';
+        } else {
+          value.firstName = value.firstName.toUpperCase();
+        }
+        console.log(value)
+        this.form.updateValueAndValidity();
+        return value;
+      }),
+      // distinctUntilChanged(),
+      filter((value) => this.form.valid))
+      .subscribe((value) => {
+        console.log("Model Driven Form valid value: vm = ",
+          JSON.stringify(value));
+      });
   }
 
   save() {
