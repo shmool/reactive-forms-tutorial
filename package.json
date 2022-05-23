@@ -27,7 +27,7 @@
     "@clr/ui": "^0.13.3",
     "@webcomponents/custom-elements": "^1.0.0",
     "core-js": "^2.5.4",
-    "dexie": "^2.0.4",
+    "dexie": "^3.2.2",
     "rxjs": "~6.2.0",
     "zone.js": "~0.8.26"
   },
